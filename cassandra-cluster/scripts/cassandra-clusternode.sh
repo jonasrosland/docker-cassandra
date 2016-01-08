@@ -2,7 +2,7 @@
 
 # Get running container's IP
 IP=`hostname --ip-address | cut -f 1 -d ' '`
-if [ $# == 1 ]; then SEEDS="$1,$IP"; 
+if [ $# == 1 ]; then SEEDS="$1,$IP";
 else SEEDS="$IP"; fi
 
 # Setup cluster name
@@ -29,5 +29,6 @@ sed -i -e "s/- seeds: \"127.0.0.1\"/- seeds: \"$CASSANDRA_SEEDS\"/" $CASSANDRA_C
 echo "JVM_OPTS=\"\$JVM_OPTS -Djava.rmi.server.hostname=$IP\"" >> $CASSANDRA_CONFIG/cassandra-env.sh
 
 echo "Starting Cassandra on $IP..."
+service datastax-agent start
 
 cassandra -f
