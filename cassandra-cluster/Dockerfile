@@ -1,4 +1,4 @@
-# Spotify Cassandra 2.0 Cluster Node Image
+# Based on Spotify Cassandra 2.0 Cluster Node Image
 #
 # VERSION               0.1
 #
