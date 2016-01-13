@@ -1,26 +1,31 @@
-# Spotify Cassandra 2.0 Base Image
+# Based on Spotify Cassandra 2.0 Base Image
 #
 # VERSION               0.1
 #
-# Installs Cassandra 2.0 package. Does only basic configuration.
+# Installs Cassandra 3.0 package. Does only basic configuration.
 # Tokens and seed nodes should be configured by child images.
 
-FROM dockerfile/java:oracle-java7
+FROM java:openjdk-8-jre
 
 ENV DEBIAN_FRONTEND noninteractive
 
 # Add DataStax sources
-ADD datastax_key /tmp/datastax_key
-RUN apt-key add /tmp/datastax_key
-RUN echo "deb http://debian.datastax.com/community stable main" > /etc/apt/sources.list.d/datastax.list
+#ADD datastax_key /tmp/datastax_key
+#RUN apt-key add /tmp/datastax_key
+#RUN echo "deb http://debian.datastax.com/community stable main" > /etc/apt/sources.list.d/datastax.list
+RUN echo "deb http://debian.datastax.com/community stable main" | tee -a /etc/apt/sources.list.d/cassandra.sources.list
+RUN curl -L http://debian.datastax.com/debian/repo_key | apt-key add -
 
 # Workaround for https://github.com/docker/docker/issues/6345
 RUN ln -s -f /bin/true /usr/bin/chfn
 
 # Install Cassandra 2.0.10
-RUN apt-get update && \
-    apt-get install -y cassandra=2.0.10 dsc20=2.0.10-1 && \
-    rm -rf /var/lib/apt/lists/*
+#RUN apt-get update && \
+#    apt-get install -y cassandra=2.0.10 dsc20=2.0.10-1 && \
+#    rm -rf /var/lib/apt/lists/*
+
+RUN apt-get update
+RUN apt-get install dsc30 -y
 
 ENV CASSANDRA_CONFIG /etc/cassandra
 
