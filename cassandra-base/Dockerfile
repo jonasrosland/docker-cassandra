@@ -25,7 +25,7 @@ RUN ln -s -f /bin/true /usr/bin/chfn
 #    rm -rf /var/lib/apt/lists/*
 
 RUN apt-get update
-RUN apt-get install dsc30 -y
+RUN apt-get install cassandra=2.1.12 dsc21 -y
 
 ENV CASSANDRA_CONFIG /etc/cassandra
 
